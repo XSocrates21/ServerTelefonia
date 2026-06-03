@@ -1,0 +1,51 @@
+Este proyecto, se tomar en cuenta de paso a paso para realizar instalación y proceso de configuración de un servidor de telefonia!
+
+Herramientas:
+Virtualizador ( VMware , Virtual Box , Promox, etc )
+Sistema Linux ( Rocky v.10 )
+https://rockylinux.org/download
+Pagina oficiales de FreePBX:
+https://www.freepbx.org/downloads/
+
+Instrucciones:
+
+Crear una maquina virtual
+Las caracteristicas uno las pone!
+
+Enlace para instalación;
+https://sangomakb.atlassian.net/wiki/spaces/FP/pages/10682545/FreePBX+Open+Source+-+How+to+Install+FreePBX+17+on+Debian+12+with+Asterisk+21
+
+apt-get update = sudo dnf update
+apt-get upgrade = sudo dnf upgrade 
+apt -y install build-essential git curl wget libnewt-dev libssl-dev libncurses5-dev subversion libsqlite3-dev libjansson-dev libxml2-dev uuid-dev default-libmysqlclient-dev htop sngrep lame ffmpeg mpg123
+apt -y install git vim curl wget libnewt-dev libssl-dev libncurses5-dev subversion libsqlite3-dev build-essential libjansson-dev libxml2-dev uuid-dev expect
+
+Activar reporsitorios
+Activar los repositorios necesarios
+Primero, necesitas habilitar el repositorio EPEL (y CodeReady Linux Builder si estás en RHEL/AlmaLinux/Rocky 9/10) para encontrar las dependencias de desarrollo y herramientas como htop o sngrep
+dnf -y install epel-release
+dnf config-manager --set-enabled crb
+
+Instalar el equivalente de "build-essential"
+En Red Hat, las herramientas de compilación se instalan como un grupo:
+dnf -y groupinstall "Development Tools"
+
+Instalar los paquetes con sus nombres correctos para dnf
+Aquí tienes la equivalencia exacta de la lista de paquetes que pusiste en tu comando original:
+dnf -y install git curl wget subversion uuid-devel mariadb-devel htop sngrep lame ffmpeg mpg123 libnewt-devel openssl-devel ncurses-devel sqlite-devel jansson-devel libxml2-devel
+
+Activar el repositorio CRB (CodeReady Builder)
+Este repositorio contiene dependencias esenciales de desarrollo como libnewt-devel. 
+Ejecuta estos comandos:
+dnf config-manager --set-enabled crb
+
+Instalar el repositorio EPEL 10
+EPEL provee paquetes comunitarios que Red Hat no incluye por defecto (como sngrep o htop). 
+Instálalo ejecutando:
+dnf -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-10.noarch.rpm
+
+Instalar los paquetes que te faltaban
+Una vez activados ambos repositorios, limpia la caché de dnf e intenta instalar de nuevo únicamente los tres paquetes que fallaron:
+dnf clean all
+dnf -y install sngrep ffmpeg libnewt-devel
+
